@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
 body{
     display: grid;
    place-items: center;
@@ -7,8 +9,10 @@ h4{
     color: gray;
     display: flex;
     justify-content: center;
-    font-size: 30px;
-    padding-top: 10px;
+    font-size: 50px;
+    padding-top: 5px;
+    margin-bottom: 18px;
+    font-family: 'Righteous', cursive;
 }
 
 #start-button{
@@ -30,6 +34,7 @@ h4{
     font-weight: 600;
     text-align: center;
     padding: 16px 14px 18px;
+    margin-bottom: 20px;
     color: #fff;
     background-color: #15883e;
     height: 48px;
@@ -44,9 +49,10 @@ h4{
         color: black;
     }
 
-.round {
+#round {
     color: black;
-    background-color: blue;
+    font-size: 15px;
+    font-family: 'Righteous', cursive;
 }
 
 

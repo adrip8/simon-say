@@ -9,7 +9,8 @@ class Simon {
     constructor(simonButtons, startButton, round){ 
 
         this.round = 0;
-        this.totalRounds = 3;
+        this.currentRound = 1;
+        this.totalRounds = 10;
         this.gameSequence = [];
         this.userPosition = 0;
         this.speed = 1000;
@@ -28,9 +29,9 @@ startGame() {
     this.userPosition = 0;
     this.updateRound(0);
     this.gameSequence = this.createSequence();
-    this.buttons.forEach((element, i) =>{
+    this.buttons.forEach((element, index) =>{
         element.classList.remove('winner'); 
-        element.onclick = () => this.buttonClick(i);
+        element.onclick = () => this.buttonClick(index);
 
     });
     this.showSequence();
@@ -47,7 +48,7 @@ updateRound(value){
 
 //array aleatorio de botones
 createSequence() {
-    return Array.from({length:this.totalRounds}, () => this.getRandomColor());
+    return Array.from({length: this.totalRounds}, () => this.getRandomColor());
 
 }
 //devulve numero (0-3)
@@ -57,14 +58,14 @@ getRandomColor(){
 
 //se ejecuta cuando se hace click en un boton validando que los botones no esten bloqueados
 buttonClick(index){
-    !this.blockedButtons && this.validateChooseColor(value);
+    !this.blockedButtons && this.validateChooseColor(index);
 }
 
 validateChooseColor(value){
 
     if (this.gameSequence[this.userPosition] == value){
         if (this.round == this.userPosition){
-            this.updateRound(this.round++);
+            this.updateRound( this.round + 1);
             this.isGameOver();
         }else{
             this.userPosition++;
@@ -81,6 +82,7 @@ isGameOver(){
         this.gameWon();
     }else{
         this.userPosition = 0;
+        this.currentRound = this.currentRound + 1;
         this.showSequence();
     };
 }
@@ -94,7 +96,7 @@ showSequence() {
         this.toggleButtonsStyle(button);
         setTimeout(() => this.toggleButtonsStyle(button), this.speed/2 )
         sequenceIndex = sequenceIndex + 1 ;
-        if(sequenceIndex < this.round){
+        if(sequenceIndex >= this.currentRound){
             this.blockedButtons = false;
             clearInterval(timer);
         }
@@ -109,9 +111,15 @@ toggleButtonsStyle(button){
 }
 
 gameLost(){
+    this.blockedButtons = true;
+    this.display.startButton.disabled = false;
+    this.display.round.textContent =`You Lose`;
 }
 
 gameWon(){
+    this.display.startButton  = false;
+    this.blockedButtons = true ; 
+    this.display.round.textContent =`You are a winner`;
 
 }
 
